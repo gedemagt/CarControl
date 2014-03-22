@@ -25,12 +25,9 @@ public class Main {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("----------------");
-				System.out.println(c.getPower());
-				System.out.println(c.getForwardBackwards());
-				System.out.println(c.getDirection());
-				com.writeByte(Converter.getSerialByte(c.getDirection(), c.getForwardBackwards(), c.getPower()));
-				System.out.println("----------------");
+				Log.log("Current state: " + Converter.getString(c.getDirection(), c.getForwardBackwards(), c.getPower()));
+				Log.log("Sent to serial: " + Converter.getSerialString(c.getDirection(), c.getForwardBackwards(), c.getPower()));
+
 				
 			}
 			

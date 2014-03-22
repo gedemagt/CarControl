@@ -9,10 +9,12 @@ import java.awt.event.AdjustmentListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
+import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -24,21 +26,38 @@ import javax.swing.border.TitledBorder;
 public class GUI extends JPanel {
 
 	private JButton startStop;
-	private JComboBox<String> ports;
-	private JComboBox<Integer> baud;
+	private JComboBox ports;
+	private JComboBox baud;
 	private Action leftAction, rightAction, upAction, downAction;
 	private Communicator c;
 	private JLabel j;
 	private JScrollPane p;
+	private JCheckBox cb;
+	private ActionControl control;
 	
 	public GUI(ActionControl control, Communicator c) {
 		this(control.getLeftAction(), control.getRightAction(), control.getUpAction(), control.getDownAction());
 		this.c = c;
+		this.control = control;
 		setupJLabel();
 		setupButtons();
 		setupTextArea();
 		setupComboBox();
+		setupCheckBox();
 		setupLayout();
+	}
+	
+	private void setupCheckBox() {
+		cb = new JCheckBox("Invert signal");
+		cb.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				Converter.setReversed(cb.isSelected());
+				Log.log("Sending inverted signal: " + cb.isSelected());
+				
+			}
+		});
 	}
 	
 	public void setBoxesEnabled(boolean b) {
@@ -72,7 +91,7 @@ public class GUI extends JPanel {
 	}
 
 	private void setupComboBox() {
-		ports = new JComboBox<String>(c.getPortNames());
+		ports = new JComboBox(c.getPortNames());
 		ports.addItemListener(new ItemListener() {
 			
 			@Override
@@ -82,7 +101,7 @@ public class GUI extends JPanel {
 			}
 		});
 		Integer[] baud = new Integer[]{300, 1200, 9600};
-		this.baud = new JComboBox<Integer>(baud);
+		this.baud = new JComboBox(baud);
 		this.baud.addItemListener(new ItemListener() {
 			
 			@Override
@@ -109,7 +128,8 @@ public class GUI extends JPanel {
 		j.add(ports);
 		j.add(baud);
 		j.add(this.j);
-		j.add(Box.createVerticalStrut(90));
+		j.add(Box.createVerticalStrut(70));
+		j.add(cb);
 		j.add(startStop);
 		add(j, BorderLayout.CENTER);
 		
@@ -131,10 +151,6 @@ public class GUI extends JPanel {
 				}
 			}
 		});
-//		up = new JButton("up");
-//		down = new JButton("down");
-//		left = new JButton("left");
-//		right = new JButton("right");
 		
 		getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("UP"), "up");
 		getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("DOWN"), "down");

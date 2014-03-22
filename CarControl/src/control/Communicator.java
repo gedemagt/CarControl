@@ -21,7 +21,7 @@ public class Communicator {
 	
 	public void writeByte(byte b) {
         try {
-            serialPort.writeByte(b);
+            if(serialPort != null) serialPort.writeByte(b);
         }
         catch (SerialPortException ex) {
             System.out.println(ex);
