@@ -9,7 +9,6 @@ import java.awt.event.AdjustmentListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
-import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -33,12 +32,10 @@ public class GUI extends JPanel {
 	private JLabel j;
 	private JScrollPane p;
 	private JCheckBox cb;
-	private ActionControl control;
 	
 	public GUI(ActionControl control, Communicator c) {
 		this(control.getLeftAction(), control.getRightAction(), control.getUpAction(), control.getDownAction());
 		this.c = c;
-		this.control = control;
 		setupJLabel();
 		setupButtons();
 		setupTextArea();
