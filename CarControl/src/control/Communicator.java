@@ -11,9 +11,12 @@ public class Communicator {
 	private int baud;
 	
 	public Communicator() {
-		port = getPortNames()[0];
-		baud = 300;
-		restartPort();
+		if(getPortNames().length == 0 ) Log.log("No ports detected");
+		else {
+			port = getPortNames()[0];
+			baud = 300;
+			restartPort();
+		}
 	}
 	
 	public void writeByte(byte b) {
@@ -36,6 +39,10 @@ public class Communicator {
 	}
 	
 	private void restartPort() {
+		if(getPortNames().length == 0 ) {
+			Log.log("No ports detected");
+			return;
+		}
 		boolean b = false;
 		try {
 			if(serialPort != null && serialPort.isOpened()) serialPort.closePort();
