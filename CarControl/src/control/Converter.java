@@ -18,6 +18,13 @@ public class Converter {
 	}
 	
 	public static String getSerialString(int direction, int forwardBackward, int power) {
+		String p = getString(direction, forwardBackward, power);
+		if(reverse) p = switchZeroOnes(p);
+		return p;
+		
+	}
+	
+	public static String getString(int direction, int forwardBackward, int power) {
 		
 		String p = "";
 		String powerString = Integer.toBinaryString(power);
@@ -26,15 +33,6 @@ public class Converter {
 		if(directionString.length() == 1) directionString = "0" + directionString;
 		while(powerString.length() < 4) powerString = "0" + powerString;
 		p = powerString + fbString + directionString + "0";
-		if(reverse) p = switchZeroOnes(p);
-		return p;
-		
-	}
-	
-	public static String getString(int direction, int forwardBackward, int power) {
-		
-		String p = getSerialString(direction, forwardBackward, power);
-		if(reverse) p = switchZeroOnes(p);
 		return p;
 		
 	}

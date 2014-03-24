@@ -50,7 +50,7 @@ public class Main {
 			@Override
 			public void run() {
 				com.writeByte(Converter.getSerialByte(c.getDirection(), c.getForwardBackwards(), c.getPower()));
-				gui.updateString(Converter.getSerialString(c.getDirection(), c.getForwardBackwards(), c.getPower()));
+				gui.updateString(Converter.getString(c.getDirection(), c.getForwardBackwards(), c.getPower()));
 			}
 		}, 0, 100);
 		gui.setBoxesEnabled(false);
